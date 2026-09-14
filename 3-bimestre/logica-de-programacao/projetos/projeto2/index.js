@@ -4,58 +4,68 @@ const preco = 4500
 const quantidade = 2
 const estoque = 10
 const valorPago = 9000
-const subtotal = (preco*quantidade)
-let estoqueDisponivel = "aguardando"
-const valorDesconto = 10
-const descontoPercentual = subtotal*valorDesconto/100
-const valorFinal = subtotal-descontoPercentual
-const troco = valorPago-valorFinal
-let statusPedido = "aguardando"
-let pagamentoStatus = "aguardando"
+const subtotal = preco * quantidade
+let descontoPercentual = 0
 
-if (quantidade <= estoque) {  
+if (subtotal >= 1000) {
+    descontoPercentual = 10
+}
+
+const valorDesconto = subtotal * descontoPercentual / 100
+const valorFinal = subtotal - valorDesconto
+
+let troco = "Aguardando"
+let statusPedido = "Aguardando"
+let pagamentoStatus = "Aguardando"
+let estoqueDisponivel = "Aguardando"
+
+if (estoque >= quantidade){
     estoqueDisponivel = "Sim"
-     statusPedido = "Pedido disponivel"
+    statusPedido = "Pedido disponível para finalização"
 } else{
-    estoqueDisponivel = "Não"
-    statusPedido = "Pedido indisponivel"
+    statusPedido = "Pedido não pode ser finalizado por falta de estoque"
+    estoqueDisponivel = "indisponivel"
 }
-if (subtotal >= 1000) {
-    console.log ( `O desconto será de ${descontoPercentual}`)
-} else {
-    console.log ("Sua compra não terá desconto")
-}
-if (subtotal >= 1000) {
-    console.log (`O valor final é de ${valorFinal}`)
-} else {
-    console.log (`O valor final é de ${subtotal}`)
-}
-if (valorFinal <= valorPago){
+
+if (valorPago >= valorFinal) {
     pagamentoStatus = "Pagamento aprovado"
+    troco = valorPago - valorFinal
+    
 } else {
-    pagamentoStatus = "pagamento insuficiente"
+    pagamentoStatus = "Pagamento insuficiente"
+    troco = 0
 }
-if (troco >0) {
-    console.log (`seu troco foi de ${troco}`)
-}else {
-    console.log ("sua compra não teve troco")
-}
-const resumo = `
-Cliente: ${cliente}
+
+const resumo = `Cliente: ${cliente}
 Produto: ${produto}
-Preço: ${preco}
+Preço: R$${preco}
 Quantidade: ${quantidade}
 Estoque: ${estoque}
-Valor pago: ${valorPago}
-Subtotal: ${subtotal}
-Valor de Desconto: ${descontoPercentual}
-Estoque disponivel: ${estoque}
-Valor Final: ${valorFinal}
-Valor Pago: ${valorPago}
-Troco: ${troco}
+Valor Pago: R$${valorPago}
+Desconto Percentual: ${descontoPercentual}%
+Valor Desconto: R$ ${valorDesconto}
+Valor Final R$ ${valorFinal}
+Troco R$ ${troco}
+Pagamento: ${pagamentoStatus}
+Situação do estoque: ${estoqueDisponivel}
+Status do pedido: ${statusPedido}`
 
+console.log(resumo)
 
-
-${pagamentoStatus}
-${statusPedido}`
-console.log (resumo)
+module.exports = {
+    cliente,
+    produto,
+    preco,
+    quantidade,
+    estoque,
+    valorPago,
+    subtotal,
+    estoqueDisponivel,
+    descontoPercentual,
+    valorDesconto,
+    valorFinal,
+    pagamentoStatus,
+    troco,
+    statusPedido,
+    resumo
+}
