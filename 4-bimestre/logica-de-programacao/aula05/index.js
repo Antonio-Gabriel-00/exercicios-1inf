@@ -1,11 +1,13 @@
 const prompt = require("prompt-sync")()
 
 const dias = Number(prompt("Quantos dias? "))
+
 let totalProduzido = 0
-for (let dia = 1; dia <= dias; dias++){
-const producao = Number(prompt(`Produção do  dia  ${dia}`))
-totalProduzido = totalProduzido + producao
+
+for (let i = 1; i <= dias; i++) {
+    let producao = Number(prompt(`Produção do dia ${i}: `))
+
+    totalProduzido = totalProduzido + producao
 }
 
 module.exports = totalProduzido
-console.log(`${totalProduzido}`)
